@@ -82,7 +82,7 @@ export default {
           <Episode v-if="this.generated == true" :data="this.data" :runtime="this.mins" :image="this.image" />
         </section>
         <section class="box">
-          <p class="sign">&lt;/3&gt; schwarzsky, open source at <a href="https://github.com/schwarzsky">github.</a> Made with TMDb APIs. Feel free to improve on <a href="https://github.com/schwarzsky">GitHub</a></p>
+          <p class="sign">&lt;/3&gt; schwarzsky, open source at <a href="https://github.com/schwarzsky/random-couple">github.</a> Made with TMDb APIs. Feel free to improve on <a href="https://github.com/schwarzsky/random-couple">GitHub</a></p>
         </section>
       </section>
     </div>
