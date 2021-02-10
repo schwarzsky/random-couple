@@ -1,24 +1,7 @@
-# randomcouple
+# ✨ Random Couple
+Random Couple is a random episode generator for the acclaimed TV show How I Met Your Mother.
 
-## Project setup
-```
-yarn install
-```
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+![alt text](https://i.hizliresim.com/vAXUsj.jpg)
 
-### Compiles and minifies for production
-```
-yarn build
-```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+live at [random-couple](https://randomcouple.vercel.app/).
