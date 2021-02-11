@@ -24,7 +24,8 @@ export default {
             image: '',
             trakt: 'd714423c83cfc1cea2272da1144bd2f7da3886fe29159bd57b4d808cb5993ad8',
             mins: '',
-            hide: 0
+            hide: 0,
+            error: 0
         }
     },
     methods: {
@@ -59,8 +60,11 @@ export default {
         query(season, episode){
             if(season && episode){
                 this.axios.get(`https://api.themoviedb.org/3/tv/1100/season/${season}/episode/${episode}?api_key=${this.tmdb}`).then((response) => {
-                    this.data = response.data;
-                    this.data.episode = `S${season}E${episode}`;
+                  this.data = response.data;
+                  this.data.episode = `S${season}E${episode}`;
+                }).catch((error) => {
+                  this.error = 1;
+                  console.log(error);
                 })
 
                 this.axios.get(`https://api.themoviedb.org/3/tv/1100/season/${season}/episode/${episode}/images?api_key=${this.tmdb}`).then((response) => {
@@ -102,15 +106,16 @@ export default {
       />
       <section class="content">
         <section class="box">
-          <h1>RANDOM-COUPLE</h1>
+          <h1>RANDOM COUPLE</h1>
           <p>Random Couple is a random episode generator for the acclaimed TV show How I Met Your Mother.</p>
           <button v-if="this.hide == 0" v-on:click="generate">GENERATE EPISODE</button>
         </section>
         <section class="box">
           <Episode v-if="this.generated == true" :data="this.data" :runtime="this.mins" :image="this.image" />
+          <Episode v-if="this.error == 1" :data="{name: 'Parallel Universe', episode: 'X Æ A-12', vote_average: '10', overview: 'Something happened on backstage or this episode cannot exist in this universe like Barney and Lily being a couple.'}" runtime="2 * (2 * 6) - 24" image="https://i.hizliresim.com/pCIkm8.png" />
         </section>
         <section class="box">
-          <p class="sign">&lt;/3&gt; schwarzsky, open source at <a href="https://github.com/schwarzsky/random-couple" target="_blank">github.</a> Made with TMDb APIs. Feel free to improve on <a href="https://github.com/schwarzsky/random-couple" target="_blank">GitHub</a>. Inspired from <a href="https://randommifflin.com/" target="_blank">Random Mifflin.</a></p>
+          <p class="sign">&lt;/3&gt; schwarzsky, open source at <a href="https://github.com/schwarzsky/random-couple" target="_blank">github.</a> Made with Trakt.tv & TMDb APIs. Feel free to improve on <a href="https://github.com/schwarzsky/random-couple" target="_blank">GitHub</a>. Inspired from <a href="https://randommifflin.com/" target="_blank">Random Mifflin.</a></p>
         </section>
       </section>
     </div>
@@ -123,6 +128,14 @@ export default {
 
 .sign {
   color: #5e5e5e;
+}
+
+.sign a {
+  color: gray;
+}
+
+.sign a:hover {
+  color: #fcba03; 
 }
 
 button {
@@ -153,7 +166,6 @@ button:hover {
 .container {
   width: 40%;
   height: 100vh;
-  background: #1f1f1f;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -174,6 +186,10 @@ button:hover {
 @media screen and (max-width: 1200px) and (min-width: 0px) {
   .container {
     width: 90% !important;
+  }
+
+  .container h1 {
+    font-size: 26px !important;
   }
 }
 </style>

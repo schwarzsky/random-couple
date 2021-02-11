@@ -6,7 +6,7 @@ export default {
 </script>
 <template>
         <article>
-            <img :src="image" alt="a episode" />
+            <img :src="image" alt="a episode" loading="lazy"/>
             <h2>{{this.data.name}}</h2>
             <section class="episode-info">
               <h3>📺 {{this.data.episode}}</h3>
@@ -38,6 +38,7 @@ article section {
 article img {
   width: 100%;
   height: auto;
+  border-radius: 5px;
 }
 
 article p {

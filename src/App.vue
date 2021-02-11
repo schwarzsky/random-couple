@@ -23,7 +23,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #1f1f1f;
+  background: #121212;
   color: white;
 }
 
