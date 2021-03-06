@@ -1,5 +1,6 @@
 <script>
 import Episode from '../shared/Episode'
+
 export default {
     name: 'Main',
     components: {
@@ -22,7 +23,13 @@ export default {
             tmdb: '850b9b287e72a3bf8ac3311272737adf',
             data: '',
             image: '',
-            trakt: 'd714423c83cfc1cea2272da1144bd2f7da3886fe29159bd57b4d808cb5993ad8',
+            trakt: {
+                headers: {
+                'Content-Type' : 'application/json',
+                'trakt-api-version' : '2',
+                'trakt-api-key' : 'd714423c83cfc1cea2272da1144bd2f7da3886fe29159bd57b4d808cb5993ad8'
+                }
+            },
             mins: '',
             hide: 0,
             error: 0
@@ -33,29 +40,7 @@ export default {
             let season = Math.floor((Math.random() * 9) + 1);
             let episode = Math.floor(Math.random() * this.episodes[season]);
 
-            this.axios.get(`https://api.themoviedb.org/3/tv/1100/season/${season}/episode/${episode}?api_key=${this.tmdb}`).then((response) => {
-                this.data = response.data;
-                this.data.episode = `S${season}E${episode}`;
-            })
-
-            this.axios.get(`https://api.themoviedb.org/3/tv/1100/season/${season}/episode/${episode}/images?api_key=${this.tmdb}`).then((response) => {
-                this.image = 'https://image.tmdb.org/t/p/original/' + response.data.stills[0].file_path;
-            })
-
-            let config = {
-                headers: {
-                'Content-Type' : 'application/json',
-                'trakt-api-version' : '2',
-                'trakt-api-key' : this.trakt
-                }
-            }
-
-            this.axios.get(`https://api.trakt.tv/shows/how-i-met-your-mother/seasons/${season}/episodes/${episode}?extended=full`, config).then((response) => {
-                this.mins = response.data.runtime;
-
-                this.generated = 1;
-                this.$router.push({path: `/${season}/${episode}`})
-            })
+            this.query(season, episode);
         },
         query(season, episode){
             if(season && episode){
@@ -71,18 +56,11 @@ export default {
                     this.image = 'https://image.tmdb.org/t/p/original/' + response.data.stills[0].file_path;
                 })
 
-                let config = {
-                    headers: {
-                        'Content-Type' : 'application/json',
-                        'trakt-api-version' : '2',
-                        'trakt-api-key' : this.trakt
-                    }
-                }
-
-                this.axios.get(`https://api.trakt.tv/shows/how-i-met-your-mother/seasons/${season}/episodes/${episode}?extended=full`, config).then((response) => {
+                this.axios.get(`https://api.trakt.tv/shows/how-i-met-your-mother/seasons/${season}/episodes/${episode}?extended=full`, this.trakt).then((response) => {
                     this.mins = response.data.runtime;
 
                     this.generated = 1;
+                    this.$router.push({path: `/${season}/${episode}`});
                 })
             }
         },
